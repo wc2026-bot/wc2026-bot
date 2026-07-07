@@ -53,7 +53,15 @@ MATCHES = [
     {"id": 6, "date": "07.07", "home": "Бельгия",                 "away": "США"},    
     {"id": 7, "date": "07.07", "home": "Аргентина",               "away": "Египет"},
     {"id": 8, "date": "07.07", "home": "Швейцария",               "away": "Колумбия"},
+  # 1/4 финала
+    {"id": 9,  "date": "09.07", "round": "1/4",  "home": "Франция",                "away": "Марокко"},
+    {"id": 10, "date": "10.07", "round": "1/4",  "home": "Испания",                "away": "Бельгия"},
+    {"id": 11, "date": "11.07", "round": "1/4",  "home": "Норвегия",               "away": "Англия"},
+    {"id": 12, "date": "11.07", "round": "1/4",  "home": "TBD*",                   "away": "TBD*",             "tbd": True},
 ]
+
+# Текущий активный раунд — меняйте здесь когда переходите к следующему раунду
+CURRENT_ROUND = "1/4"
 
 # ConversationHandler states
 SELECT_MATCH, ENTER_SCORE, CONFIRM = range(3)
