@@ -35,7 +35,7 @@ from telegram.ext import (
 import os
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
 ADMIN_IDS = [int(x.strip()) for x in os.environ.get("ADMIN_IDS", "0").split(",")]  # задаётся через переменные окружения
-DB_FILE   = "wc2026.db"
+DB_FILE   = os.path.join(os.environ.get("DATA_DIR", "/app/data"), "wc2026.db")
 # ─────────────────────────────────────────────
 
 logging.basicConfig(
