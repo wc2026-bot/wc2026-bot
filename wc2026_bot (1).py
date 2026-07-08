@@ -45,19 +45,19 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 
 MATCHES = [
-    {"id": 1, "date": "04.07", "home": "Парагвай",                "away": "Франция"},
-    {"id": 2, "date": "04.07", "home": "Канада",                  "away": "Марокко"},
-    {"id": 3, "date": "05.07", "home": "Норвегия",                "away": "Бразилия"},
-    {"id": 4, "date": "06.07", "home": "Мексика",                 "away": "Англия"},
-    {"id": 5, "date": "06.07", "home": "Португалия",              "away": "Испания"},
-    {"id": 6, "date": "07.07", "home": "Бельгия",                 "away": "США"},    
-    {"id": 7, "date": "07.07", "home": "Аргентина",               "away": "Египет"},
-    {"id": 8, "date": "07.07", "home": "Швейцария",               "away": "Колумбия"},
+    {"id": 1, "date": "04.07", "round": "1/8", "home": "Парагвай",                "away": "Франция"},
+    {"id": 2, "date": "04.07", "round": "1/8", "home": "Канада",                  "away": "Марокко"},
+    {"id": 3, "date": "05.07", "round": "1/8", "home": "Норвегия",                "away": "Бразилия"},
+    {"id": 4, "date": "06.07", "round": "1/8", "home": "Мексика",                 "away": "Англия"},
+    {"id": 5, "date": "06.07", "round": "1/8", "home": "Португалия",              "away": "Испания"},
+    {"id": 6, "date": "07.07", "round": "1/8", "home": "Бельгия",                 "away": "США"},
+    {"id": 7, "date": "07.07", "round": "1/8", "home": "Аргентина",               "away": "Египет"},
+    {"id": 8, "date": "07.07", "round": "1/8", "home": "Швейцария",               "away": "Колумбия"},
   # 1/4 финала
     {"id": 9,  "date": "09.07", "round": "1/4",  "home": "Франция",                "away": "Марокко"},
     {"id": 10, "date": "10.07", "round": "1/4",  "home": "Испания",                "away": "Бельгия"},
     {"id": 11, "date": "11.07", "round": "1/4",  "home": "Норвегия",               "away": "Англия"},
-    {"id": 12, "date": "11.07", "round": "1/4",  "home": "Аргентина",              "away": "Шверйцария"},
+    {"id": 12, "date": "11.07", "round": "1/4",  "home": "Аргентина",              "away": "Швейцария"},
 ]
 
 # Текущий активный раунд — меняйте здесь когда переходите к следующему раунду
@@ -207,15 +207,18 @@ async def cmd_start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 # /predict — пошаговый диалог
 # ══════════════════════════════════════════════
 async def cmd_predict(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    active = [m for m in MATCHES if m.get("round", "1/8") == CURRENT_ROUND]
     ctx.user_data["pred_idx"] = 0
     ctx.user_data["pending"] = {}
+    ctx.user_data["active_matches"] = active
     return await ask_match(update, ctx)
 
 async def ask_match(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     idx = ctx.user_data.get("pred_idx", 0)
-    if idx >= len(MATCHES):
+    active = ctx.user_data.get("active_matches", MATCHES)
+    if idx >= len(active):
         return await finish_prediction(update, ctx)
-    m = MATCHES[idx]
+    m = active[idx]
     msg = (
         f"⚽ <b>Матч {m['id']}/8</b> — {m['date']}\n"
         f"<b>{m['home']} — {m['away']}</b>\n\n"
