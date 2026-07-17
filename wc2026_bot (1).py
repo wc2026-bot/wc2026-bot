@@ -61,10 +61,13 @@ MATCHES = [
   # 1/2 финала
     {"id": 13, "date": "15.07", "round": "1/2", "home": "Франция",  "away": "Испания"},
     {"id": 14, "date": "16.07", "round": "1/2", "home": "Англия",   "away": "Аргентина"},
+   # финал
+  {"id": 15, "date": "19.07", "round": "Финал", "home": "Франция", "away": "Англия"},
+    {"id": 16, "date": "19.07", "round": "Финал", "home": "Испания", "away": "Аргентина"},
 ]
 
 # Текущий активный раунд — меняйте здесь когда переходите к следующему раунду
-CURRENT_ROUND = "1/2"
+CURRENT_ROUND = "Финал"
 
 # ConversationHandler states
 SELECT_MATCH, ENTER_SCORE, CONFIRM = range(3)
